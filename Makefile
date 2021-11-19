@@ -15,7 +15,7 @@ CXX           = g++
 DEFINES       = -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -O2 -pthread -pthread -Wall -W -D_REENTRANT -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -O2 -pthread -pthread -Wall -W -D_REENTRANT -fPIC $(DEFINES)
-INCPATH       = -I. -I../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0 -I../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0 -I../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/lib/glib-2.0/include -I../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/orc-0.4 -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -I. -isystem /usr/include/libdrm -I. -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
+INCPATH       = -I. -isystem /usr/local/include/opencv4 -I../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0 -I../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0 -I../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/lib/glib-2.0/include -I../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/orc-0.4 -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -I. -isystem /usr/include/libdrm -I. -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
 QMAKE         = /usr/lib/qt5/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -38,7 +38,7 @@ DISTNAME      = AboutWin1.0.0
 DISTDIR = /home/minji/Desktop/Qt\ files/Example/AboutWin/.tmp/AboutWin1.0.0
 LINK          = g++
 LFLAGS        = -Wl,-O1
-LIBS          = $(SUBLIBS) -lgstvideo-1.0 -lgstbase-1.0 -lgstreamer-1.0 -lgobject-2.0 -lglib-2.0 -lQt5Widgets -lQt5Gui -lQt5Core -lGL -lpthread 
+LIBS          = $(SUBLIBS) -L/usr/local/lib -lopencv_core -lopencv_imgproc -lopencv_highgui -lopencv_ml -lopencv_videoio -lopencv_gapi -lopencv_stitching -lopencv_aruco -lopencv_bgsegm -lopencv_bioinspired -lopencv_ccalib -lopencv_dnn_objdetect -lopencv_dpm -lopencv_face -lopencv_fuzzy -lopencv_hfs -lopencv_img_hash -lopencv_line_descriptor -lopencv_reg -lopencv_rgbd -lopencv_saliency -lopencv_stereo -lopencv_structured_light -lopencv_phase_unwrapping -lopencv_superres -lopencv_optflow -lopencv_surface_matching -lopencv_tracking -lopencv_datasets -lopencv_text -lopencv_dnn -lopencv_plot -lopencv_videostab -lopencv_video -lopencv_photo -lopencv_xfeatures2d -lopencv_shape -lopencv_ximgproc -lopencv_xobjdetect -lopencv_objdetect -lopencv_calib3d -lopencv_features2d -lopencv_imgcodecs -lopencv_flann -lopencv_xphoto -lgstvideo-1.0 -lgstbase-1.0 -lgstreamer-1.0 -lgobject-2.0 -lglib-2.0 -lQt5Widgets -lQt5Gui -lQt5Core -lGL -lpthread 
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
@@ -52,13 +52,15 @@ OBJECTS_DIR   = ./
 
 SOURCES       = main.cpp \
 		mainwindow.cpp \
-		aboutme.cpp qrc_resource2.cpp \
+		aboutme.cpp \
+		gst.cpp qrc_resource2.cpp \
 		qrc_resource_211116.cpp \
 		moc_mainwindow.cpp \
 		moc_aboutme.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
 		aboutme.o \
+		gst.o \
 		qrc_resource2.o \
 		qrc_resource_211116.o \
 		moc_mainwindow.o \
@@ -142,7 +144,8 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		AboutWin.pro mainwindow.h \
 		aboutme.h main.cpp \
 		mainwindow.cpp \
-		aboutme.cpp
+		aboutme.cpp \
+		gst.cpp
 QMAKE_TARGET  = AboutWin
 DESTDIR       = 
 TARGET        = AboutWin
@@ -336,7 +339,7 @@ distdir: FORCE
 	$(COPY_FILE) --parents resource2.qrc resource_211116.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents mainwindow.h aboutme.h $(DISTDIR)/
-	$(COPY_FILE) --parents main.cpp mainwindow.cpp aboutme.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents main.cpp mainwindow.cpp aboutme.cpp gst.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents mainwindow.ui aboutme.ui $(DISTDIR)/
 
 
@@ -387,12 +390,12 @@ moc_mainwindow.cpp: aboutme.h \
 		mainwindow.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I'/home/minji/Desktop/Qt files/Example/AboutWin' -I/home/minji/4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0 -I/home/minji/4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0 -I/home/minji/4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/lib/glib-2.0/include -I/home/minji/4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/orc-0.4 -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include mainwindow.h -o moc_mainwindow.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I'/home/minji/Desktop/Qt files/Example/AboutWin' -I/usr/local/include/opencv4 -I/home/minji/4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0 -I/home/minji/4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0 -I/home/minji/4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/lib/glib-2.0/include -I/home/minji/4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/orc-0.4 -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include mainwindow.h -o moc_mainwindow.cpp
 
 moc_aboutme.cpp: aboutme.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I'/home/minji/Desktop/Qt files/Example/AboutWin' -I/home/minji/4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0 -I/home/minji/4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0 -I/home/minji/4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/lib/glib-2.0/include -I/home/minji/4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/orc-0.4 -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include aboutme.h -o moc_aboutme.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I'/home/minji/Desktop/Qt files/Example/AboutWin' -I/usr/local/include/opencv4 -I/home/minji/4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0 -I/home/minji/4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0 -I/home/minji/4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/lib/glib-2.0/include -I/home/minji/4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/orc-0.4 -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include aboutme.h -o moc_aboutme.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
@@ -418,7 +421,188 @@ compiler_clean: compiler_rcc_clean compiler_moc_predefs_clean compiler_moc_heade
 ####### Compile
 
 main.o: main.cpp mainwindow.h \
-		aboutme.h
+		aboutme.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/galloca.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gtypes.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/lib/glib-2.0/include/glibconfig.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gmacros.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gversionmacros.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/garray.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gasyncqueue.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gthread.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gatomic.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gerror.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gquark.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gutils.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gbacktrace.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gbase64.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gbitlock.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gbookmarkfile.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gbytes.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gcharset.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gchecksum.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gconvert.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gdataset.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gdate.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gdatetime.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gtimezone.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gdir.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/genviron.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gfileutils.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/ggettext.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/ghash.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/glist.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gmem.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gnode.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/ghmac.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/ghook.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/ghostutils.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/giochannel.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gmain.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gpoll.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gslist.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gstring.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gunicode.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gkeyfile.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gmappedfile.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gmarkup.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gmessages.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gvariant.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gvarianttype.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/goption.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gpattern.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gprimes.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gqsort.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gqueue.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/grand.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/grcbox.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/grefcount.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/grefstring.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gregex.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gscanner.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gsequence.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gshell.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gslice.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gspawn.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gstrfuncs.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gstringchunk.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gtestutils.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gthreadpool.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gtimer.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gtrashstack.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gtree.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gurifuncs.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/guuid.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gversion.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gwin32.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/deprecated/gallocator.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/deprecated/gcache.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/deprecated/gcompletion.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/deprecated/gmain.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/deprecated/grel.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/deprecated/gthread.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/glib-autocleanups.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gst.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/glib-compat.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstenumtypes.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib-object.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/gobject/gbinding.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/gobject/gobject.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/gobject/gtype.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/gobject/gvalue.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/gobject/gparam.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/gobject/gclosure.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/gobject/gsignal.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/gobject/gmarshal.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/gobject/gboxed.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/gobject/glib-types.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/gobject/genums.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/gobject/gparamspecs.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/gobject/gsourceclosure.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/gobject/gtypemodule.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/gobject/gtypeplugin.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/gobject/gvaluearray.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/gobject/gvaluetypes.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/gobject/glib-enumtypes.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/gobject/gobject-autocleanups.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstconfig.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstversion.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstatomicqueue.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstbin.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstelement.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstobject.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstcontrolbinding.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstcontrolsource.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstclock.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstpad.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstbuffer.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstminiobject.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstallocator.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstmemory.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstcaps.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gststructure.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstdatetime.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstcapsfeatures.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstmeta.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstbufferlist.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstpadtemplate.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstevent.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstformat.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstiterator.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gsttaglist.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstsample.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstsegment.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstmessage.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstquery.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gsttoc.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstcontext.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstdevice.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gststreams.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gststreamcollection.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gsttask.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gsttaskpool.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstbus.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstelementfactory.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstplugin.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstmacros.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstpluginfeature.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gsturi.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstbufferpool.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstchildproxy.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstdebugutils.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstdevicemonitor.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstdeviceprovider.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstdeviceproviderfactory.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstdynamictypefactory.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstelementmetadata.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gsterror.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstghostpad.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstinfo.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstparamspecs.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstvalue.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstpipeline.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstpoll.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstpreset.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstprotection.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstregistry.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstpromise.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstsystemclock.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gsttagsetter.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gsttocsetter.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gsttracer.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gsttracerfactory.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gsttracerrecord.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gsttypefind.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gsttypefindfactory.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstutils.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstparse.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstcompat.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/video/videooverlay.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/video/gstvideosink.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/base/gstbasesink.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/base/base-prelude.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/video/video-prelude.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
 
 mainwindow.o: mainwindow.cpp mainwindow.h \
@@ -611,6 +795,189 @@ aboutme.o: aboutme.cpp aboutme.h \
 		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/base/base-prelude.h \
 		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/video/video-prelude.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o aboutme.o aboutme.cpp
+
+gst.o: gst.cpp ../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/galloca.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gtypes.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/lib/glib-2.0/include/glibconfig.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gmacros.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gversionmacros.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/garray.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gasyncqueue.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gthread.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gatomic.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gerror.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gquark.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gutils.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gbacktrace.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gbase64.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gbitlock.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gbookmarkfile.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gbytes.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gcharset.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gchecksum.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gconvert.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gdataset.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gdate.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gdatetime.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gtimezone.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gdir.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/genviron.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gfileutils.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/ggettext.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/ghash.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/glist.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gmem.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gnode.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/ghmac.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/ghook.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/ghostutils.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/giochannel.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gmain.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gpoll.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gslist.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gstring.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gunicode.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gkeyfile.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gmappedfile.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gmarkup.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gmessages.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gvariant.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gvarianttype.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/goption.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gpattern.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gprimes.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gqsort.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gqueue.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/grand.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/grcbox.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/grefcount.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/grefstring.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gregex.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gscanner.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gsequence.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gshell.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gslice.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gspawn.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gstrfuncs.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gstringchunk.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gtestutils.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gthreadpool.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gtimer.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gtrashstack.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gtree.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gurifuncs.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/guuid.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gversion.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/gwin32.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/deprecated/gallocator.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/deprecated/gcache.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/deprecated/gcompletion.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/deprecated/gmain.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/deprecated/grel.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/deprecated/gthread.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib/glib-autocleanups.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gst.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/glib-compat.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstenumtypes.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/glib-object.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/gobject/gbinding.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/gobject/gobject.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/gobject/gtype.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/gobject/gvalue.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/gobject/gparam.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/gobject/gclosure.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/gobject/gsignal.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/gobject/gmarshal.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/gobject/gboxed.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/gobject/glib-types.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/gobject/genums.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/gobject/gparamspecs.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/gobject/gsourceclosure.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/gobject/gtypemodule.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/gobject/gtypeplugin.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/gobject/gvaluearray.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/gobject/gvaluetypes.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/gobject/glib-enumtypes.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/glib-2.0/gobject/gobject-autocleanups.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstconfig.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstversion.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstatomicqueue.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstbin.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstelement.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstobject.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstcontrolbinding.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstcontrolsource.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstclock.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstpad.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstbuffer.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstminiobject.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstallocator.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstmemory.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstcaps.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gststructure.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstdatetime.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstcapsfeatures.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstmeta.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstbufferlist.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstpadtemplate.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstevent.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstformat.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstiterator.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gsttaglist.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstsample.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstsegment.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstmessage.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstquery.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gsttoc.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstcontext.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstdevice.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gststreams.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gststreamcollection.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gsttask.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gsttaskpool.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstbus.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstelementfactory.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstplugin.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstmacros.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstpluginfeature.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gsturi.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstbufferpool.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstchildproxy.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstdebugutils.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstdevicemonitor.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstdeviceprovider.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstdeviceproviderfactory.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstdynamictypefactory.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstelementmetadata.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gsterror.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstghostpad.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstinfo.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstparamspecs.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstvalue.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstpipeline.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstpoll.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstpreset.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstprotection.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstregistry.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstpromise.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstsystemclock.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gsttagsetter.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gsttocsetter.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gsttracer.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gsttracerfactory.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gsttracerrecord.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gsttypefind.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gsttypefindfactory.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstutils.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstparse.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/gstcompat.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/video/videooverlay.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/video/gstvideosink.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/base/gstbasesink.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/base/base-prelude.h \
+		../../../../4_ultra96_211113/Design-Project_211111/images/linux/sdk/sysroots/aarch64-xilinx-linux/usr/include/gstreamer-1.0/gst/video/video-prelude.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o gst.o gst.cpp
 
 qrc_resource2.o: qrc_resource2.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_resource2.o qrc_resource2.cpp

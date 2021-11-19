@@ -5,12 +5,20 @@
 #include <QDialog>
 #include <QImage>
 #include <QPixmap>
-#include <QtMultimedia/QCamera>
 #include <QDebug>
-#include <QtMultimedia/QCameraInfo>
-#include <QtMultimedia/QAbstractVideoSurface>
 #include <QLabel>
 #include <QDateTime>
+#include <QGraphicsScene>
+#include <QGraphicsPixmapItem>
+#include <QCloseEvent>
+#include <QMessageBox>
+#include <QTimer>
+
+
+#include <opencv2/opencv.hpp>
+#include <opencv2/highgui.hpp>
+#include <opencv2/imgproc.hpp>
+using namespace cv;
 
 
 namespace Ui {
@@ -24,27 +32,31 @@ class AboutMe : public QMainWindow {
 
 protected:
     void changeEvent(QEvent *e);
+    //void closeEvent(QCloseEvent *event); //undefined reference error
 
 private:
     Ui::AboutMe *ui;
-    void *reader;
-    bool is_detecting;
+    QGraphicsPixmapItem pixmap;
+    //cv::VideoCapture video; //undefined reference error
+
+    QTimer *timer;
+    VideoCapture cap;
+
+    Mat frame;
+    QImage qt_image;
+
 
 public:
     AboutMe(QWidget *parent=0);
     ~AboutMe();
 
-    void reset();
-
-    QList<QVideoFrame::PixelFormat>
-    supportedPixelFormats(QAbstractVideoBuffer::HandleType type) const;
-
-    bool present(const QVideoFrame &frame);
-
 
 
 private slots:
     void on_pushButton_clicked();
+    void on_pushButton_open_webcam_clicked();
+    void on_pushButton_close_webcam_clicked();
+    void update_window();
 };
 
 #endif // ABOUTME_H

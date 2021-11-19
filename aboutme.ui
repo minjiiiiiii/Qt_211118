@@ -6,39 +6,59 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>600</width>
-    <height>480</height>
+    <width>921</width>
+    <height>800</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QPushButton" name="pushButton">
-    <property name="geometry">
-     <rect>
-      <x>490</x>
-      <y>390</y>
-      <width>93</width>
-      <height>27</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>&amp;Close</string>
-    </property>
-   </widget>
    <widget class="QLabel" name="label_pic2">
     <property name="geometry">
      <rect>
-      <x>30</x>
+      <x>20</x>
       <y>10</y>
-      <width>431</width>
-      <height>371</height>
+      <width>701</width>
+      <height>491</height>
      </rect>
     </property>
     <property name="text">
      <string/>
     </property>
+   </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>740</x>
+      <y>10</y>
+      <width>171</width>
+      <height>181</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QPushButton" name="pushButton">
+       <property name="text">
+        <string>&amp;Close</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_open_webcam">
+       <property name="text">
+        <string>Open Webcam</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_close_webcam">
+       <property name="text">
+        <string>Close Webcam</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -46,7 +66,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>600</width>
+     <width>921</width>
      <height>22</height>
     </rect>
    </property>
