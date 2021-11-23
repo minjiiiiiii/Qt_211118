@@ -25,9 +25,11 @@ INSTALLS += target
 
 PKGCONFIG += gstreamer-1.0 gstreamer-video-1.0 glib-2.0
 
-
 INCLUDEPATH += /usr/local/include/opencv4/
 
+
+
+#LIBS comment when modify ui & should restart qt creator after modify,build, make ui
 LIBS +=-L/usr/local/lib \
 -lopencv_core\
  -lopencv_imgproc\

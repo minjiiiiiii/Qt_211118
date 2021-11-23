@@ -40,9 +40,9 @@ private:
     //cv::VideoCapture video; //undefined reference error
 
     QTimer *timer;
-    VideoCapture cap;
+    VideoCapture cap;  //comment(modify ui)
 
-    Mat frame;
+    Mat frame,gray;   //comment(modify ui)
     QImage qt_image;
 
 
@@ -54,9 +54,9 @@ public:
 
 private slots:
     void on_pushButton_clicked();
-    void on_pushButton_open_webcam_clicked();
-    void on_pushButton_close_webcam_clicked();
-    void update_window();
+    void on_pushButton_open_webcam_clicked();   //comment(modify ui)
+    void on_pushButton_close_webcam_clicked();  //comment(modify ui)
+    void update_window();                       //comment(modify ui)
 };
 
 #endif // ABOUTME_H

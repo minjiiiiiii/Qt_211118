@@ -35,6 +35,7 @@ AboutMe::AboutMe(QWidget *parent) :
     timer = new QTimer(this);
 
 
+
 }
 
 AboutMe::~AboutMe()
@@ -58,8 +59,6 @@ void AboutMe::on_pushButton_clicked()
 {
     close();
 }
-
-
 
 void AboutMe::on_pushButton_open_webcam_clicked()
 {
@@ -98,6 +97,31 @@ void AboutMe::on_pushButton_close_webcam_clicked()
 void AboutMe::update_window()
 {
     cap >> frame;
+    QRCodeDetector detector;
+
+    if (frame.empty()) {
+               std::cerr << "Frame load failed!" << endl;
+               //return;
+           }
+
+           cvtColor(frame, gray, COLOR_BGR2GRAY);
+
+           std::vector<Point> points;
+           if (detector.detect(gray, points)) {
+               polylines(frame, points, true, Scalar(0, 255, 255), 2);
+
+               String info = detector.decode(gray, points);
+
+               if (!info.empty()) {
+                   polylines(frame, points, true, Scalar(0, 0, 255), 2);
+                   //std::cout << info << endl;
+                QString qinfo = QString::fromStdString(info);
+
+                ui->label_detect->setText(qinfo);
+
+               }
+           }
+
 
     cvtColor(frame, frame, cv::COLOR_BGR2RGB );
 
@@ -106,4 +130,12 @@ void AboutMe::update_window()
     ui->label_pic2->setPixmap(QPixmap::fromImage(qt_image));
 
     ui->label_pic2->resize(ui->label_pic2->pixmap()->size());
+
+
+
+
+
 }
+
+
+
