@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created by: Qt User Interface Compiler version 5.13.2
+** Created by: Qt User Interface Compiler version 5.9.5
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -10,16 +10,18 @@
 #define UI_MAINWINDOW_H
 
 #include <QtCore/QVariant>
+#include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QCheckBox>
-#include <QtWidgets/QFormLayout>
+#include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QGridLayout>
 #include <QtWidgets/QGroupBox>
+#include <QtWidgets/QHBoxLayout>
+#include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
-#include <QtWidgets/QRadioButton>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QVBoxLayout>
@@ -32,26 +34,20 @@ class Ui_MainWindow
 public:
     QWidget *centralWidget;
     QGroupBox *groupBox;
-    QWidget *layoutWidget;
+    QGridLayout *gridLayout;
     QVBoxLayout *verticalLayout;
-    QFormLayout *formLayout;
+    QHBoxLayout *horizontalLayout_2;
     QLabel *label;
     QLineEdit *lineEdit_username;
+    QHBoxLayout *horizontalLayout;
     QLabel *label_2;
     QLineEdit *lineEdit_password;
     QPushButton *pushButton_login;
-    QWidget *layoutWidget1;
+    QWidget *layoutWidget;
     QVBoxLayout *verticalLayout_2;
     QPushButton *pushButton;
     QPushButton *pushButton_2;
     QLabel *label_pic;
-    QCheckBox *checkBox;
-    QPushButton *pushButton_3;
-    QPushButton *pushButton_4;
-    QWidget *layoutWidget2;
-    QVBoxLayout *verticalLayout_3;
-    QRadioButton *radioButton;
-    QRadioButton *radioButton_2;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -59,121 +55,102 @@ public:
     void setupUi(QMainWindow *MainWindow)
     {
         if (MainWindow->objectName().isEmpty())
-            MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
+            MainWindow->setObjectName(QStringLiteral("MainWindow"));
         MainWindow->setEnabled(true);
-        MainWindow->resize(600, 480);
+        MainWindow->resize(1920, 1080);
         centralWidget = new QWidget(MainWindow);
-        centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
+        centralWidget->setObjectName(QStringLiteral("centralWidget"));
         groupBox = new QGroupBox(centralWidget);
-        groupBox->setObjectName(QString::fromUtf8("groupBox"));
-        groupBox->setGeometry(QRect(320, 20, 271, 151));
-        groupBox->setStyleSheet(QString::fromUtf8("border-width:2px; border-style : solid; border-color: pink;"));
-        layoutWidget = new QWidget(groupBox);
-        layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
-        layoutWidget->setGeometry(QRect(10, 40, 261, 101));
-        verticalLayout = new QVBoxLayout(layoutWidget);
+        groupBox->setObjectName(QStringLiteral("groupBox"));
+        groupBox->setGeometry(QRect(690, 30, 431, 261));
+        groupBox->setStyleSheet(QStringLiteral("border-width:2px; border-style : solid; border-color: pink;"));
+        gridLayout = new QGridLayout(groupBox);
+        gridLayout->setSpacing(6);
+        gridLayout->setContentsMargins(11, 11, 11, 11);
+        gridLayout->setObjectName(QStringLiteral("gridLayout"));
+        verticalLayout = new QVBoxLayout();
         verticalLayout->setSpacing(6);
-        verticalLayout->setContentsMargins(11, 11, 11, 11);
-        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
-        verticalLayout->setContentsMargins(0, 0, 0, 0);
-        formLayout = new QFormLayout();
-        formLayout->setSpacing(6);
-        formLayout->setObjectName(QString::fromUtf8("formLayout"));
-        label = new QLabel(layoutWidget);
-        label->setObjectName(QString::fromUtf8("label"));
-        label->setStyleSheet(QString::fromUtf8("border-width:2px; border-style : solid; border-color: pink;"));
+        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
+        horizontalLayout_2 = new QHBoxLayout();
+        horizontalLayout_2->setSpacing(6);
+        horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
+        label = new QLabel(groupBox);
+        label->setObjectName(QStringLiteral("label"));
+        label->setStyleSheet(QStringLiteral("border-width:2px; border-style : solid; border-color: pink;"));
 
-        formLayout->setWidget(0, QFormLayout::LabelRole, label);
+        horizontalLayout_2->addWidget(label);
 
-        lineEdit_username = new QLineEdit(layoutWidget);
-        lineEdit_username->setObjectName(QString::fromUtf8("lineEdit_username"));
+        lineEdit_username = new QLineEdit(groupBox);
+        lineEdit_username->setObjectName(QStringLiteral("lineEdit_username"));
 
-        formLayout->setWidget(0, QFormLayout::FieldRole, lineEdit_username);
+        horizontalLayout_2->addWidget(lineEdit_username);
 
-        label_2 = new QLabel(layoutWidget);
-        label_2->setObjectName(QString::fromUtf8("label_2"));
 
-        formLayout->setWidget(1, QFormLayout::LabelRole, label_2);
+        verticalLayout->addLayout(horizontalLayout_2);
 
-        lineEdit_password = new QLineEdit(layoutWidget);
-        lineEdit_password->setObjectName(QString::fromUtf8("lineEdit_password"));
+        horizontalLayout = new QHBoxLayout();
+        horizontalLayout->setSpacing(6);
+        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
+        label_2 = new QLabel(groupBox);
+        label_2->setObjectName(QStringLiteral("label_2"));
+
+        horizontalLayout->addWidget(label_2);
+
+        lineEdit_password = new QLineEdit(groupBox);
+        lineEdit_password->setObjectName(QStringLiteral("lineEdit_password"));
         lineEdit_password->setEchoMode(QLineEdit::Password);
 
-        formLayout->setWidget(1, QFormLayout::FieldRole, lineEdit_password);
+        horizontalLayout->addWidget(lineEdit_password);
 
 
-        verticalLayout->addLayout(formLayout);
+        verticalLayout->addLayout(horizontalLayout);
 
-        pushButton_login = new QPushButton(layoutWidget);
-        pushButton_login->setObjectName(QString::fromUtf8("pushButton_login"));
 
-        verticalLayout->addWidget(pushButton_login);
+        gridLayout->addLayout(verticalLayout, 0, 0, 1, 1);
 
-        layoutWidget1 = new QWidget(centralWidget);
-        layoutWidget1->setObjectName(QString::fromUtf8("layoutWidget1"));
-        layoutWidget1->setGeometry(QRect(510, 350, 82, 58));
-        verticalLayout_2 = new QVBoxLayout(layoutWidget1);
+        pushButton_login = new QPushButton(groupBox);
+        pushButton_login->setObjectName(QStringLiteral("pushButton_login"));
+
+        gridLayout->addWidget(pushButton_login, 1, 0, 1, 1);
+
+        layoutWidget = new QWidget(centralWidget);
+        layoutWidget->setObjectName(QStringLiteral("layoutWidget"));
+        layoutWidget->setGeometry(QRect(1040, 530, 82, 58));
+        verticalLayout_2 = new QVBoxLayout(layoutWidget);
         verticalLayout_2->setSpacing(6);
         verticalLayout_2->setContentsMargins(11, 11, 11, 11);
-        verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
+        verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
         verticalLayout_2->setContentsMargins(0, 0, 0, 0);
-        pushButton = new QPushButton(layoutWidget1);
-        pushButton->setObjectName(QString::fromUtf8("pushButton"));
-        pushButton->setStyleSheet(QString::fromUtf8("color:pink; "));
+        pushButton = new QPushButton(layoutWidget);
+        pushButton->setObjectName(QStringLiteral("pushButton"));
+        pushButton->setStyleSheet(QStringLiteral("color:pink; "));
 
         verticalLayout_2->addWidget(pushButton);
 
-        pushButton_2 = new QPushButton(layoutWidget1);
-        pushButton_2->setObjectName(QString::fromUtf8("pushButton_2"));
-        pushButton_2->setStyleSheet(QString::fromUtf8("color:red;"));
+        pushButton_2 = new QPushButton(layoutWidget);
+        pushButton_2->setObjectName(QStringLiteral("pushButton_2"));
+        pushButton_2->setStyleSheet(QStringLiteral("color:red;"));
 
         verticalLayout_2->addWidget(pushButton_2);
 
         label_pic = new QLabel(centralWidget);
-        label_pic->setObjectName(QString::fromUtf8("label_pic"));
-        label_pic->setGeometry(QRect(30, 30, 271, 381));
-        checkBox = new QCheckBox(centralWidget);
-        checkBox->setObjectName(QString::fromUtf8("checkBox"));
-        checkBox->setGeometry(QRect(320, 190, 92, 23));
-        pushButton_3 = new QPushButton(centralWidget);
-        pushButton_3->setObjectName(QString::fromUtf8("pushButton_3"));
-        pushButton_3->setGeometry(QRect(458, 190, 111, 25));
-        pushButton_4 = new QPushButton(centralWidget);
-        pushButton_4->setObjectName(QString::fromUtf8("pushButton_4"));
-        pushButton_4->setGeometry(QRect(460, 230, 111, 25));
-        layoutWidget2 = new QWidget(centralWidget);
-        layoutWidget2->setObjectName(QString::fromUtf8("layoutWidget2"));
-        layoutWidget2->setGeometry(QRect(320, 230, 120, 54));
-        verticalLayout_3 = new QVBoxLayout(layoutWidget2);
-        verticalLayout_3->setSpacing(6);
-        verticalLayout_3->setContentsMargins(11, 11, 11, 11);
-        verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
-        verticalLayout_3->setContentsMargins(0, 0, 0, 0);
-        radioButton = new QRadioButton(layoutWidget2);
-        radioButton->setObjectName(QString::fromUtf8("radioButton"));
-
-        verticalLayout_3->addWidget(radioButton);
-
-        radioButton_2 = new QRadioButton(layoutWidget2);
-        radioButton_2->setObjectName(QString::fromUtf8("radioButton_2"));
-
-        verticalLayout_3->addWidget(radioButton_2);
-
+        label_pic->setObjectName(QStringLiteral("label_pic"));
+        label_pic->setGeometry(QRect(30, 30, 631, 421));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
-        menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 600, 22));
+        menuBar->setObjectName(QStringLiteral("menuBar"));
+        menuBar->setGeometry(QRect(0, 0, 1920, 22));
         MainWindow->setMenuBar(menuBar);
         mainToolBar = new QToolBar(MainWindow);
-        mainToolBar->setObjectName(QString::fromUtf8("mainToolBar"));
+        mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
         MainWindow->addToolBar(Qt::TopToolBarArea, mainToolBar);
         statusBar = new QStatusBar(MainWindow);
-        statusBar->setObjectName(QString::fromUtf8("statusBar"));
+        statusBar->setObjectName(QStringLiteral("statusBar"));
         MainWindow->setStatusBar(statusBar);
-#if QT_CONFIG(shortcut)
+#ifndef QT_NO_SHORTCUT
         label->setBuddy(lineEdit_username);
         label_2->setBuddy(lineEdit_password);
-#endif // QT_CONFIG(shortcut)
+#endif // QT_NO_SHORTCUT
 
         retranslateUi(MainWindow);
 
@@ -182,19 +159,14 @@ public:
 
     void retranslateUi(QMainWindow *MainWindow)
     {
-        MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
-        groupBox->setTitle(QCoreApplication::translate("MainWindow", "  Sign in ", nullptr));
-        label->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p><span style=\" color:#5c3566;\">Username</span></p></body></html>", nullptr));
-        label_2->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p><span style=\" color:#5c3566;\">Password</span></p></body></html>", nullptr));
-        pushButton_login->setText(QCoreApplication::translate("MainWindow", "Login ", nullptr));
-        pushButton->setText(QCoreApplication::translate("MainWindow", "&About", nullptr));
-        pushButton_2->setText(QCoreApplication::translate("MainWindow", "E&xit", nullptr));
+        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", Q_NULLPTR));
+        groupBox->setTitle(QApplication::translate("MainWindow", "  Sign in ", Q_NULLPTR));
+        label->setText(QApplication::translate("MainWindow", "<html><head/><body><p><span style=\" color:#5c3566;\">Username</span></p></body></html>", Q_NULLPTR));
+        label_2->setText(QApplication::translate("MainWindow", "<html><head/><body><p><span style=\" color:#5c3566;\">Password</span></p></body></html>", Q_NULLPTR));
+        pushButton_login->setText(QApplication::translate("MainWindow", "Login ", Q_NULLPTR));
+        pushButton->setText(QApplication::translate("MainWindow", "&About", Q_NULLPTR));
+        pushButton_2->setText(QApplication::translate("MainWindow", "E&xit", Q_NULLPTR));
         label_pic->setText(QString());
-        checkBox->setText(QCoreApplication::translate("MainWindow", "CheckBox", nullptr));
-        pushButton_3->setText(QCoreApplication::translate("MainWindow", "Check Button", nullptr));
-        pushButton_4->setText(QCoreApplication::translate("MainWindow", "Authorization", nullptr));
-        radioButton->setText(QCoreApplication::translate("MainWindow", "Authorized", nullptr));
-        radioButton_2->setText(QCoreApplication::translate("MainWindow", "Unauthorized", nullptr));
     } // retranslateUi
 
 };

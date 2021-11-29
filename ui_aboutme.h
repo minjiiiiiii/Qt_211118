@@ -35,6 +35,7 @@ public:
     QPushButton *pushButton_open_webcam;
     QPushButton *pushButton_close_webcam;
     QLabel *label_detect;
+    QPushButton *pushButton_Go;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -42,15 +43,15 @@ public:
     {
         if (AboutMe->objectName().isEmpty())
             AboutMe->setObjectName(QStringLiteral("AboutMe"));
-        AboutMe->resize(921, 800);
+        AboutMe->resize(1920, 1080);
         centralwidget = new QWidget(AboutMe);
         centralwidget->setObjectName(QStringLiteral("centralwidget"));
         label_pic2 = new QLabel(centralwidget);
         label_pic2->setObjectName(QStringLiteral("label_pic2"));
-        label_pic2->setGeometry(QRect(20, 10, 701, 491));
+        label_pic2->setGeometry(QRect(20, 10, 811, 611));
         layoutWidget = new QWidget(centralwidget);
         layoutWidget->setObjectName(QStringLiteral("layoutWidget"));
-        layoutWidget->setGeometry(QRect(740, 10, 171, 181));
+        layoutWidget->setGeometry(QRect(860, 10, 281, 301));
         verticalLayout = new QVBoxLayout(layoutWidget);
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
         verticalLayout->setContentsMargins(0, 0, 0, 0);
@@ -71,11 +72,14 @@ public:
 
         label_detect = new QLabel(centralwidget);
         label_detect->setObjectName(QStringLiteral("label_detect"));
-        label_detect->setGeometry(QRect(30, 550, 831, 21));
+        label_detect->setGeometry(QRect(21, 671, 981, 17));
+        pushButton_Go = new QPushButton(centralwidget);
+        pushButton_Go->setObjectName(QStringLiteral("pushButton_Go"));
+        pushButton_Go->setGeometry(QRect(1030, 660, 89, 25));
         AboutMe->setCentralWidget(centralwidget);
         menubar = new QMenuBar(AboutMe);
         menubar->setObjectName(QStringLiteral("menubar"));
-        menubar->setGeometry(QRect(0, 0, 921, 22));
+        menubar->setGeometry(QRect(0, 0, 1920, 22));
         AboutMe->setMenuBar(menubar);
         statusbar = new QStatusBar(AboutMe);
         statusbar->setObjectName(QStringLiteral("statusbar"));
@@ -94,6 +98,7 @@ public:
         pushButton_open_webcam->setText(QApplication::translate("AboutMe", "Open Webcam", Q_NULLPTR));
         pushButton_close_webcam->setText(QApplication::translate("AboutMe", "Close Webcam", Q_NULLPTR));
         label_detect->setText(QString());
+        pushButton_Go->setText(QApplication::translate("AboutMe", "Go", Q_NULLPTR));
     } // retranslateUi
 
 };

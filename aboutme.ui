@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>921</width>
-    <height>800</height>
+    <width>1920</width>
+    <height>1080</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,8 +19,8 @@
      <rect>
       <x>20</x>
       <y>10</y>
-      <width>701</width>
-      <height>491</height>
+      <width>811</width>
+      <height>611</height>
      </rect>
     </property>
     <property name="text">
@@ -30,10 +30,10 @@
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>740</x>
+      <x>860</x>
       <y>10</y>
-      <width>171</width>
-      <height>181</height>
+      <width>281</width>
+      <height>301</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
@@ -63,14 +63,27 @@
    <widget class="QLabel" name="label_detect">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>550</y>
-      <width>831</width>
-      <height>21</height>
+      <x>21</x>
+      <y>671</y>
+      <width>981</width>
+      <height>17</height>
      </rect>
     </property>
     <property name="text">
      <string/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_Go">
+    <property name="geometry">
+     <rect>
+      <x>1030</x>
+      <y>660</y>
+      <width>89</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Go</string>
     </property>
    </widget>
   </widget>
@@ -79,7 +92,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>921</width>
+     <width>1920</width>
      <height>22</height>
     </rect>
    </property>

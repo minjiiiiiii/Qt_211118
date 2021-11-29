@@ -14,7 +14,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    QPixmap pix(":/img/img/testimage.jpg");
+    QPixmap pix(":/img_sgu/img/image_SGU.png");
 
     int w = ui->label_pic->width();
     int h = ui->label_pic->height();
@@ -72,7 +72,7 @@ void MainWindow::on_pushButton_login_clicked()
 }
 
 
-
+/*
 void MainWindow::on_pushButton_3_clicked()
 {
     if(ui->checkBox->isChecked()) {
@@ -82,7 +82,6 @@ void MainWindow::on_pushButton_3_clicked()
     }
 
 }
-
 
 void MainWindow::on_checkBox_stateChanged(int arg1)
 {
@@ -101,6 +100,8 @@ void MainWindow::on_pushButton_4_clicked()
     }
     if(ui->radioButton_2->isChecked()){
         QMessageBox::information(this,"title","Unauthorized user");
+        exit(1);
     }
 }
 
+*/

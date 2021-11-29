@@ -60,6 +60,7 @@ void AboutMe::on_pushButton_clicked()
     close();
 }
 
+
 void AboutMe::on_pushButton_open_webcam_clicked()
 {
         cap.open(0);
@@ -136,6 +137,7 @@ void AboutMe::update_window()
 
 
 }
+
 
 
 
