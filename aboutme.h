@@ -57,6 +57,7 @@ private slots:
     void on_pushButton_open_webcam_clicked();   //comment(modify ui)
     void on_pushButton_close_webcam_clicked();  //comment(modify ui)
     void update_window();                       //comment(modify ui)
+    void on_pushButton_Go_clicked();
 };
 
 #endif // ABOUTME_H

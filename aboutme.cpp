@@ -13,6 +13,11 @@
 #include <QWidget>
 #include <iostream>
 
+#include <QFileDialog>
+#include <QProcess>
+#include <QDebug>
+QString qinfo;
+
 
 
 
@@ -116,7 +121,7 @@ void AboutMe::update_window()
                if (!info.empty()) {
                    polylines(frame, points, true, Scalar(0, 0, 255), 2);
                    //std::cout << info << endl;
-                QString qinfo = QString::fromStdString(info);
+                qinfo = QString::fromStdString(info);
 
                 ui->label_detect->setText(qinfo);
 
@@ -141,3 +146,8 @@ void AboutMe::update_window()
 
 
 
+
+void AboutMe::on_pushButton_Go_clicked()
+{
+QProcess process; process.startDetached("/bin/bash", QStringList()<< "/root/get_Ultrasound.sh" << qinfo);
+}

@@ -2,5 +2,6 @@
     <qresource prefix="/img_sgu">
         <file>img/image_sgu.jpeg</file>
         <file>img/image_SGU.png</file>
+        <file>img/get_Ultrasound.sh</file>
     </qresource>
 </RCC>

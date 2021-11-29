@@ -76,3 +76,5 @@ LIBS +=-L/usr/local/lib \
 -lopencv_imgcodecs \
 -lopencv_flann\
 -lopencv_xphoto
+
+DISTFILES +=
