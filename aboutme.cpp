@@ -149,5 +149,15 @@ void AboutMe::update_window()
 
 void AboutMe::on_pushButton_Go_clicked()
 {
-QProcess process; process.startDetached("/bin/bash", QStringList()<< "/root/get_Ultrasound.sh" << qinfo);
+    QProcess process; process.startDetached("/bin/bash", QStringList()<< "/root/get_Ultrasound.sh" << qinfo);
+    QMessageBox about_box(this);
+
+    about_box.setText("/root/Ultrasound/" + qinfo + "/5.jpeg");
+
+
+    about_box.setIconPixmap(QPixmap("/root/Ultrasound/" + qinfo + "/5.jpeg"));
+    about_box.setParent(this);
+
+    about_box.exec();
+
 }
