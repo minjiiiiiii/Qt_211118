@@ -170,6 +170,8 @@ void AboutMe::on_pushButton_Go_clicked()
         QMessageBox about_box(this);
 
         QDir dir("/root/Ultrasound/" + qinfo); //디렉토리와 관련된 클래스인 QDir의 오브젝트 생성
+
+        
         QFileInfoList fileList = dir.entryInfoList(); // 주어진 dir 안의 file과 directory의 정보들의 list를 만듬
 
         static int n = 0;
